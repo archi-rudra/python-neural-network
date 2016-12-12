@@ -16,7 +16,7 @@ default_configuration = {
     'max_iterations'        : ()
 }
 
-def adagrad(network, trainingset, testset, cost_function, epsilon = 1e-8, **kwargs ):
+def adagrad(network, trainingset, testset, cost_function, epsilon = 1e-8, data_creator=None, **kwargs ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -28,12 +28,13 @@ def adagrad(network, trainingset, testset, cost_function, epsilon = 1e-8, **kwar
         return -learning_rate * dX / (np.sqrt(cache[ layer_index ]) + epsilon)
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration  )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration)
 #end
 
 
 
-def RMSprop(network, trainingset, testset, cost_function, decay_rate = 0.99, epsilon = 1e-8, **kwargs  ):
+def RMSprop(network, trainingset, testset, cost_function, decay_rate = 0.99, epsilon = 1e-8, data_creator=None, **kwargs  ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -45,12 +46,13 @@ def RMSprop(network, trainingset, testset, cost_function, decay_rate = 0.99, eps
         return -learning_rate * dX / (np.sqrt(cache[ layer_index ]) + epsilon)
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration)
 #end
 
 
 
-def Adam(network, trainingset, testset, cost_function, beta1 = 0.9, beta2 = 0.999, epsilon = 1e-8, **kwargs ):
+def Adam(network, trainingset, testset, cost_function, beta1 = 0.9, beta2 = 0.999, epsilon = 1e-8, data_creator=None, **kwargs ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -65,12 +67,13 @@ def Adam(network, trainingset, testset, cost_function, beta1 = 0.9, beta2 = 0.99
         return -learning_rate * m[ layer_index ] / ( np.sqrt(v[ layer_index ]) + epsilon )
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration  )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration  )
 #end
 
 
 
-def nesterov_momentum(network, trainingset, testset, cost_function, momentum_factor = 0.9, **kwargs  ):
+def nesterov_momentum(network, trainingset, testset, cost_function, momentum_factor = 0.9, data_creator=None, **kwargs  ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -88,12 +91,13 @@ def nesterov_momentum(network, trainingset, testset, cost_function, momentum_fac
         return dW
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration  )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration  )
 #end
 
 
 
-def classical_momentum(network, trainingset, testset, cost_function, momentum_factor = 0.9, **kwargs  ):
+def classical_momentum(network, trainingset, testset, cost_function, momentum_factor = 0.9, data_creator=None, **kwargs  ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -106,12 +110,13 @@ def classical_momentum(network, trainingset, testset, cost_function, momentum_fa
         return dW
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration  )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration  )
 #end
 
 
 
-def vanilla(network, trainingset, testset, cost_function, **kwargs ):
+def vanilla(network, trainingset, testset, cost_function, data_creator=None, **kwargs ):
     configuration = dict(default_configuration)
     configuration.update( kwargs )
     
@@ -120,5 +125,6 @@ def vanilla(network, trainingset, testset, cost_function, **kwargs ):
         return -learning_rate * dX
     #end
     
-    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW, **configuration  )
+    return backpropagation_foundation( network, trainingset, testset, cost_function, calculate_dW,
+                                       data_creator=data_creator, **configuration  )
 #end

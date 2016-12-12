@@ -14,17 +14,21 @@ def check_network_structure( network, cost_function ):
 #end
 
 
+def default_data_creator(dataset):
+    data              = np.array( [instance.features for instance in dataset ] )
+    targets           = np.array( [instance.targets  for instance in dataset ] )
+    return data, targets 
 
-def verify_dataset_shape_and_modify( network, dataset ):   
+
+def verify_dataset_shape_and_modify( network, dataset, data_creator=None):
     assert dataset[0].features.shape[0] == network.n_inputs, \
         "ERROR: input size varies from the defined input setting"
     assert dataset[0].targets.shape[0]  == network.layers[-1][0], \
         "ERROR: output size varies from the defined output setting"
-    
-    data              = np.array( [instance.features for instance in dataset ] )
-    targets           = np.array( [instance.targets  for instance in dataset ] )
-    
-    return data, targets 
+
+    if data_creator is None:
+        data_creator = default_data_creator
+    return data_creator(dataset)
 #end
 
 
